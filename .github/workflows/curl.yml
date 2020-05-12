@@ -1,0 +1,15 @@
+name: Curl-power
+on:
+  push:
+    tags:
+      - '!refs/tags/*'
+    branches:
+      - '*'
+jobs:
+  curl_requests:
+    runs-on: [ubuntu-latest]
+    steps:
+      - name: curl
+        run: curl http://161.35.108.15:8000/github/get?status=${GITHUB_REF##*/}
+      - name: curl_post
+        run: curl -X POST -H "Content-Type:application/json" -d "{\"status\":\"${GITHUB_REF##*/}\"}" http://161.35.108.15:8000/github/post
